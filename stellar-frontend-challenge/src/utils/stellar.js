@@ -66,7 +66,7 @@ export async function getBalance(publicKey) {
     const account = await SERVER.loadAccount(publicKey)
     const xlmBalance = account.balances.find((b) => b.asset_type === 'native')
     const balance = xlmBalance ? Number(xlmBalance.balance) : 0
-    return balance
+    return Number.isFinite(balance) ? balance : 0
   } catch (err) {
     console.error('Failed to get balance:', err)
     return 0
@@ -76,12 +76,13 @@ export async function getBalance(publicKey) {
 export async function sendXLM(publicKey, destination, amount) {
   try {
     const source = await SERVER.loadAccount(publicKey)
-    const fee = String(source.base_fee_in_stroops)
+    const fee = '100'
+    const amountStr = String(amount)
     const transaction = new TransactionBuilder(source, { fee, networkPassphrase: NETWORK_PASSPHRASE })
       .addOperation('payment', {
         destination,
         asset: Asset.native(),
-        amount: String(amount),
+        amount: amountStr,
       })
       .setTimeout(30)
       .build()
@@ -94,11 +95,16 @@ export async function sendXLM(publicKey, destination, amount) {
       },
     })
 
+    if (!signedXDR?.signedTxXdr) {
+      throw new Error('Freighter did not return a signed transaction XDR')
+    }
+
     const signedTransaction = TransactionBuilder.fromXDR(signedXDR.signedTxXdr, NETWORK_PASSPHRASE)
     const result = await SERVER.submitTransaction(signedTransaction)
     return { success: true, hash: result.hash }
   } catch (err) {
     console.error('Failed to send XLM:', err)
-    return { success: false, error: err.message || 'Transaction failed' }
+    const message = err?.message || err?.toString() || 'Transaction failed'
+    return { success: false, error: message }
   }
 }
