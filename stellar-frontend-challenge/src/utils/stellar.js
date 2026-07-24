@@ -2,7 +2,7 @@ import FreighterApi from '@stellar/freighter-api'
 import { Horizon, Networks, TransactionBuilder, Asset } from '@stellar/stellar-sdk'
 
 const NETWORK_PASSPHRASE = Networks.TESTNET
-const NETWORK_URL = 'https://horizon.stellar.org'
+const NETWORK_URL = 'https://horizon-testnet.stellar.org'
 const SERVER = new Horizon.Server(NETWORK_URL)
 
 export async function getNetwork() {
