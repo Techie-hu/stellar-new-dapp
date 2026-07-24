@@ -78,14 +78,20 @@ export async function sendXLM(publicKey, destination, amount) {
     const source = await SERVER.loadAccount(publicKey)
     const fee = '100'
     const amountStr = String(amount)
-    const transaction = new TransactionBuilder(source, { fee, networkPassphrase: NETWORK_PASSPHRASE })
-      .addOperation('payment', {
-        destination,
-        asset: Asset.native(),
-        amount: amountStr,
-      })
-      .setTimeout(30)
-      .build()
+
+    let transaction
+    try {
+      transaction = new TransactionBuilder(source, { fee, networkPassphrase: NETWORK_PASSPHRASE })
+        .addOperation('payment', {
+          destination,
+          asset: Asset.native(),
+          amount: amountStr,
+        })
+        .setTimeout(30)
+        .build()
+    } catch (err) {
+      throw new Error('Failed to build transaction: ' + err.message)
+    }
 
     const signedXDR = await FreighterApi.signTransaction({
       xdr: transaction.toXDR(),
