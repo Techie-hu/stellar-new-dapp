@@ -99,7 +99,13 @@ export async function sendXLM(publicKey, destination, amount) {
       throw new Error('Freighter did not return a signed transaction XDR')
     }
 
-    const signedTransaction = TransactionBuilder.fromXDR(signedXDR.signedTxXdr, NETWORK_PASSPHRASE)
+    let signedTransaction
+    try {
+      signedTransaction = TransactionBuilder.fromXDR(signedXDR.signedTxXdr, NETWORK_PASSPHRASE)
+    } catch (err) {
+      throw new Error('Failed to parse signed transaction: ' + err.message)
+    }
+
     const result = await SERVER.submitTransaction(signedTransaction)
     return { success: true, hash: result.hash }
   } catch (err) {
