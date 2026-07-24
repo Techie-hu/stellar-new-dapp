@@ -93,13 +93,12 @@ export async function sendXLM(publicKey, destination, amount) {
       throw new Error('Failed to build transaction: ' + err.message)
     }
 
-    const signedXDR = await FreighterApi.signTransaction({
-      xdr: transaction.toXDR(),
-      network: {
+    const signedXDR = await FreighterApi.signTransaction(
+      transaction.toXDR(),
+      {
         networkPassphrase: NETWORK_PASSPHRASE,
-        serverUrl: NETWORK_URL,
-      },
-    })
+      }
+    )
 
     if (!signedXDR?.signedTxXdr) {
       const reason = signedXDR?.error?.message || signedXDR?.error?.toString() || 'Freighter did not return a signed transaction XDR. The user may have rejected the transaction, or Freighter may not be connected/unlocked.'
