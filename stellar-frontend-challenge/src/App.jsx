@@ -84,13 +84,19 @@ function App() {
       return
     }
 
-    if (amount > balance) {
+    const amountStr = amount.toFixed(7).replace(/\.?0+$/, '')
+    if (!amountStr || Number.isNaN(Number(amountStr))) {
+      setError('Invalid amount format.')
+      return
+    }
+
+    if (Number(amountStr) > balance) {
       setError('Insufficient balance for this transaction.')
       return
     }
 
     setLoading(true)
-    const result = await sendXLM(publicKey, form.destination, amount)
+    const result = await sendXLM(publicKey, form.destination, amountStr)
     setLoading(false)
 
     if (result.success) {
