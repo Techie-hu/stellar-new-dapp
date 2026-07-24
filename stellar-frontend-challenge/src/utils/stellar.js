@@ -102,7 +102,8 @@ export async function sendXLM(publicKey, destination, amount) {
     })
 
     if (!signedXDR?.signedTxXdr) {
-      throw new Error('Freighter did not return a signed transaction XDR')
+      const reason = signedXDR?.error?.message || signedXDR?.error?.toString() || 'Freighter did not return a signed transaction XDR. The user may have rejected the transaction, or Freighter may not be connected/unlocked.'
+      throw new Error(reason)
     }
 
     let signedTransaction
