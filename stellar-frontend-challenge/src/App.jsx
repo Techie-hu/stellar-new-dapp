@@ -52,7 +52,8 @@ function App() {
       setConnected(true)
       refreshBalance(res.address)
     } else {
-      setError('Failed to connect Freighter wallet. Please make sure Freighter is installed and unlocked.')
+      const reason = res?.error || 'Failed to connect Freighter wallet. Please make sure Freighter is installed and unlocked.'
+      setError(reason)
     }
     setLoading(false)
   }

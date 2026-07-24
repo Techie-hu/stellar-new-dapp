@@ -35,8 +35,9 @@ export async function connectWallet() {
     })
     return response
   } catch (err) {
-    console.error('Failed to connect wallet:', err)
-    return null
+    const message = err?.message || err?.toString() || 'Unknown error'
+    console.error('Failed to connect wallet:', message)
+    return { error: message }
   }
 }
 
