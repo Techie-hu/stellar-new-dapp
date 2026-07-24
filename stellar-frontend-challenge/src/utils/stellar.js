@@ -76,7 +76,7 @@ export async function getBalance(publicKey) {
 export async function sendXLM(publicKey, destination, amount) {
   try {
     const source = await SERVER.loadAccount(publicKey)
-    const fee = source.baseFee
+    const fee = String(source.base_fee_in_stroops)
     const transaction = new TransactionBuilder(source, { fee, networkPassphrase: NETWORK_PASSPHRASE })
       .addOperation('payment', {
         destination,
@@ -94,7 +94,8 @@ export async function sendXLM(publicKey, destination, amount) {
       },
     })
 
-    const result = await SERVER.submitTransaction(signedXDR.signedTxXdr)
+    const signedTransaction = TransactionBuilder.fromXDR(signedXDR.signedTxXdr, NETWORK_PASSPHRASE)
+    const result = await SERVER.submitTransaction(signedTransaction)
     return { success: true, hash: result.hash }
   } catch (err) {
     console.error('Failed to send XLM:', err)
