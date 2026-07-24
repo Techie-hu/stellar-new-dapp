@@ -1,4 +1,4 @@
-import { FreighterApi } from '@stellar/freighter-api'
+import FreighterApi from '@stellar/freighter-api'
 import { Horizon, Networks, TransactionBuilder, Asset } from '@stellar/stellar-sdk'
 
 const NETWORK_PASSPHRASE = Networks.TESTNET
