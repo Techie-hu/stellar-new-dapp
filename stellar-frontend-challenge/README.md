@@ -28,8 +28,8 @@ StellarPay is a simple payment dApp that demonstrates the core fundamentals of S
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/stellar-frontend-challenge.git
-cd stellar-frontend-challenge
+git clone https://github.com/Techie-hu/stellar-new-dapp.git
+cd stellar-new-dapp/stellar-frontend-challenge
 ```
 
 2. Install dependencies:
@@ -102,15 +102,6 @@ stellar-frontend-challenge/
 
 ## Screenshots
 
-Add the following screenshots to the `screenshots/` folder:
-
-- `wallet-connected.png` — Wallet connected state showing address and balance
-- `balance-displayed.png` — Balance displayed clearly in the UI
-- `tx-success.png` — Successful testnet transaction with hash and explorer link
-
-Or replace the placeholders below with actual images:
-
-<!--
 ### Wallet Connected State
 ![Wallet Connected](./screenshots/wallet-connected.png)
 
@@ -119,7 +110,6 @@ Or replace the placeholders below with actual images:
 
 ### Successful Testnet Transaction
 ![Transaction Success](./screenshots/tx-success.png)
--->
 
 ## License
 
