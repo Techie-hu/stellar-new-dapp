@@ -1,5 +1,5 @@
 import FreighterApi from '@stellar/freighter-api'
-import { Horizon, Networks, TransactionBuilder, Asset } from '@stellar/stellar-sdk'
+import { Horizon, Networks, TransactionBuilder, Asset, Operation } from '@stellar/stellar-sdk'
 
 const NETWORK_PASSPHRASE = Networks.TESTNET
 const NETWORK_URL = 'https://horizon-testnet.stellar.org'
@@ -82,11 +82,11 @@ export async function sendXLM(publicKey, destination, amount) {
     let transaction
     try {
       transaction = new TransactionBuilder(source, { fee, networkPassphrase: NETWORK_PASSPHRASE })
-        .addOperation('payment', {
+        .addOperation(Operation.payment({
           destination,
           asset: Asset.native(),
           amount: amountStr,
-        })
+        }))
         .setTimeout(30)
         .build()
     } catch (err) {
@@ -108,8 +108,6 @@ export async function sendXLM(publicKey, destination, amount) {
     let signedTransaction
     try {
       signedTransaction = TransactionBuilder.fromXDR(signedXDR.signedTxXdr, NETWORK_PASSPHRASE)
-      console.log('Parsed signed transaction type:', signedTransaction?.constructor?.name)
-      console.log('Has toEnvelope:', typeof signedTransaction?.toEnvelope)
     } catch (err) {
       console.error('Failed to parse signed transaction:', err)
       throw new Error('Failed to parse signed transaction: ' + err.message)
