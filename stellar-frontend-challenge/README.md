@@ -102,6 +102,15 @@ stellar-frontend-challenge/
 
 ## Screenshots
 
+Add the following screenshots to the `screenshots/` folder:
+
+- `wallet-connected.png` — Wallet connected state showing address and balance
+- `balance-displayed.png` — Balance displayed clearly in the UI
+- `tx-success.png` — Successful testnet transaction with hash and explorer link
+
+Or replace the placeholders below with actual images:
+
+<!--
 ### Wallet Connected State
 ![Wallet Connected](./screenshots/wallet-connected.png)
 
@@ -110,6 +119,7 @@ stellar-frontend-challenge/
 
 ### Successful Testnet Transaction
 ![Transaction Success](./screenshots/tx-success.png)
+-->
 
 ## License
 
