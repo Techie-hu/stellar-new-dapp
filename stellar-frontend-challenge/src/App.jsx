@@ -21,7 +21,7 @@ function App() {
   const refreshBalance = useCallback(async (pk) => {
     if (!pk) return
     const bal = await getBalance(pk)
-    setBalance(bal)
+    setBalance(Number.isFinite(bal) ? bal : 0)
   }, [])
 
   useEffect(() => {
